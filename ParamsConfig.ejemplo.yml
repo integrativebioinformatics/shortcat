@@ -1,0 +1,24 @@
+Samples: "/media/storage2/surquiza_docs/datasets_rat_HC/dataset_NE_cardios/miRNA/*_mi.fq.gz" # Ruta al directorio que contiene las muestras | ejemplo: "/media/storage2/surquiza_docs/datasets_rat_HC/dataset_NE_cardios/miRNA/*_mi.fq.gz"
+Organism: "Rattus_norvegicus" # Organismo al que pertenecen las  | ejemplo: "Rattus_norvegicus"
+Bowtie_index: "" # Ruta al índice de Bowtie para el genoma de referencia | el prefijo debe ser el mismo que el organismo
+Genome: "/media/storage1/Adolfo/LIB_works/Primary_assembly_ensembl_hard.fa" # Ruta al genoma de referencia | si no se tiene un índice de Bowtie, se debe facilitar el genoma
+Adapters_fasta: "/media/storage1/Adolfo/LIB_works/GitHub/ShortCat/Test/z_adapters_truseq.fasta" # Ruta al archivo FASTA que contiene adaptadores a recortar (opcional)
+mod_FastP: "-g" # Modificaciones a aplicar con FastP | ejemplo: "-g" para recortar polyG en novaseq|nextseq
+PerCHR: true # Si se debe realizar el análisis por cromosoma
+Perl: false # Si se debe utilizar Perl para el análisis (no recomendado, se debe arreglar)
+
+max_N_alig: 10 # Número máximo de alineaciones permitidas por lectura
+mismatch: 1 # Número máximo de desajustes permitidos en la alineación
+cr: 5 # Umbral de lecturas para ARNs ensamblados
+Strand: "no" # Orientación de las lecturas (no = no específico, yes = específico)
+
+DESeq2: true # Si se debe utilizar DESeq2 para el análisis | si es true, se debe especificar el archivo de condiciones y los nombres de las condiciones
+ConditionsFile: "/media/storage1/Adolfo/LIB_works/GitHub/ShortCat/Test/Conditions.csv" # Ruta al archivo que contiene las condiciones de las muestras
+Control_name: "Ctrl6" # Nombre de la condición de control
+Case_name: "Nora24" # Nombre de la condición de caso
+
+# ejemplos de ejecucion
+#con YAML
+  # nextflow GitHub/ShortCat/main.nf -c GitHub/ShortCat/nextflow.config -params-file GitHub/ShortCat/ParamsConfig.ejemplo.yml -with-report PerCHR_Mode.Report.html -with-timeline PerCHR_Mode.Timeline.html -resume 
+#solo terminal  
+  # nextflow GitHub/ShortCat/main.nf --Samples="/media/storage2/surquiza_docs/datasets_rat_HC/dataset_NE_cardios/miRNA/*_mi.fq.gz" --mod_FastP='-g' --Adapters_fasta='/media/storage1/Adolfo/LIB_works/GitHub/ShortCat/Test/z_adapters_truseq.fasta' -c GitHub/ShortCat/nextflow.config  -resume --ConditionsFile="/media/storage1/Adolfo/LIB_works/GitHub/ShortCat/Test/Conditions.csv" --Control_name=Ctrl6 --Case_name=Nora24 -with-report --Organism="Rattus_norvegicus" --Genome="/media/storage1/Adolfo/LIB_works/Primary_assembly_ensembl_hard.fa" --PerCHR

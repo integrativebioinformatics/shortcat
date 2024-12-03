@@ -1,0 +1,9 @@
+library("DESeq2")
+cts <- as.matrix(read.csv("HERE_RUTE_COUNTS",sep="\t",row.names="gene_id"))
+coldata <- read.csv("HERE_RUTE_CONDITION",sep="\t", row.names=1)
+coldata <- coldata[,c("condition","type")]
+dds <- DESeqDataSetFromMatrix(countData = cts,
+                              colData = coldata,
+                              design = ~ condition)
+dds$condition <- factor(dds$condition, levels = c(HERE_THE_ID))
+dds <- DESeq(dds)
